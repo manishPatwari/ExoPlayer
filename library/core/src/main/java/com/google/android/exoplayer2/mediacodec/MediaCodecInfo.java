@@ -163,7 +163,7 @@ public final class MediaCodecInfo {
     adaptive = !forceDisableAdaptive && capabilities != null && isAdaptive(capabilities);
     tunneling = capabilities != null && isTunneling(capabilities);
     secure = forceSecure || (capabilities != null && isSecure(capabilities));
-    if (!name.toLowerCase().startsWith("omx.google.")) {
+    if (!name.toLowerCase().startsWith("omx.google.") || !name.toLowerCase().startsWith("c2.android.")) {
       isHardwareSupported = true;
     } else {
       isHardwareSupported = false;
