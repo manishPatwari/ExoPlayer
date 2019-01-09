@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import java.io.IOException;
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public final class MergingMediaSource extends CompositeMediaSource<Integer> {
   public static final class IllegalMergeException extends IOException {
 
     /** The reason the merge failed. One of {@link #REASON_PERIOD_COUNT_MISMATCH}. */
+    @Documented
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({REASON_PERIOD_COUNT_MISMATCH})
     public @interface Reason {}
@@ -94,6 +96,12 @@ public final class MergingMediaSource extends CompositeMediaSource<Integer> {
     pendingTimelineSources = new ArrayList<>(Arrays.asList(mediaSources));
     periodCount = PERIOD_COUNT_UNSET;
     timelines = new Timeline[mediaSources.length];
+  }
+
+  @Override
+  @Nullable
+  public Object getTag() {
+    return mediaSources.length > 0 ? mediaSources[0].getTag() : null;
   }
 
   @Override
